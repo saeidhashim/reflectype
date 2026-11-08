@@ -75,7 +75,7 @@ textarea::-webkit-scrollbar-thumb:hover{background:rgba(29,27,24,.5)}
 body[data-view=home] .brand span,body[data-view=editor] .brand span{display:none}
 .big{margin-bottom:56px}
 
-.icon{width:46px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.icon{width:46px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--ink);margin-left:auto}
 .nbhead{display:none}
 .nb .icon{background:var(--ink);color:var(--paper);border-radius:12px 9px 13px 8px/9px 13px 8px 12px}
 .nb .icon::before{display:none}
@@ -114,7 +114,7 @@ button:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid va
 .btn[disabled]{opacity:.5;cursor:default}
 .copybox.empty{color:var(--mute);font-style:italic}
 .brand b a{color:inherit;text-decoration:none}
-@media(max-width:760px){.icon{display:none}}
+@media(max-width:760px){.icon{display:none}#export-link{margin-left:auto}}
 a{color:inherit;text-decoration:none}
 a.g,a.btn,a.back{display:inline-block}
 textarea:focus-visible{outline:none}
