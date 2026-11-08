@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reflectype</title>
+<meta name="description" content="Watch something. Write your perspective.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%231d1b18%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-size=%2720%27 text-anchor=%27middle%27 fill=%27%23f4efe4%27 font-family=%27serif%27%3ER%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-view="home">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></svg>
+<div class="wrap">
+  <div class="brand"><b><a href="#/">Reflectype</a></b><span>Watch something. Write your perspective.</span></div>
+  <div style="margin-top:12px"><hr class="rule"></div>
+
+  <section id="home" class="view">
+    <div class="date" id="today"></div>
+    <h1 class="big">What will you watch today?</h1>
+    <div class="genres" id="genres"></div>
+  </section>
+
+  <section id="editor" class="view">
+    <div class="bar">
+      <a class="back" href="#/">&larr; Back</a>
+      <div class="title"><small id="e-genre"></small><span id="e-title"></span></div>
+      <span class="saved" id="saved" aria-live="polite"></span>
+      <button class="icon sketch" id="nbtoggle" type="button" aria-label="Notebook view" aria-pressed="false" title="Notebook view"><svg viewBox="0 0 28 24" width="26" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5c-2.5-1.8-6-2.3-11-2v16c5-.3 8.5.2 11 2 2.5-1.8 6-2.3 11-2V3c-5-.3-8.5.2-11 2z"/><path d="M14 5v16"/><path d="M6 8c1.6 0 3 .2 5 .8M6 12c1.6 0 3 .2 5 .8M17 8.8c2-.6 3.4-.8 5-.8M17 12.8c2-.6 3.4-.8 5-.8" stroke-width="1.2"/></svg></button>
+      <a class="btn sketch" id="export-link" href="#/">Export</a>
+    </div>
+    <hr class="rule">
+    <div class="split">
+      <div class="left">
+        <div class="nbhead"><small id="n-genre"></small><h2 id="n-title"></h2><div class="nbdate" id="n-date"></div></div>
+        <div class="video" id="video"></div>
+      </div>
+      <div class="pad sketch thin">
+        <textarea id="ta" aria-label="Your reflection" placeholder="Start typing. Paste is turned off, so write it in your own words." spellcheck="true"></textarea>
+        <div class="count" id="count"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="export" class="view">
+    <div class="bar">
+      <a class="back" id="back-writing" href="#/">&larr; Back to writing</a>
+      <div class="title"><small>Export</small>Preview, copy, then post on LinkedIn yourself</div>
+    </div>
+    <hr class="rule">
+    <div class="xwrap">
+      <div>
+        <p class="cap">Card</p>
+        <div class="card"><canvas id="card" width="1200" height="630" aria-label="Share card preview"></canvas></div>
+        <div class="row"><button class="btn sketch" id="dl" type="button">Download card</button></div>
+        <p class="hint">The card uses Reflectype's own artwork, not a frame or thumbnail from the video.</p>
+      </div>
+      <div>
+        <p class="cap">Text to copy</p>
+        <div class="copybox sketch thin" id="copybox"></div>
+        <div class="row"><button class="btn solid" id="copy" type="button">Copy text</button></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <p class="hint">Paste into LinkedIn. When you type the @ at the end, pick our page from LinkedIn's list so it becomes a real tag. Nothing is posted for you.</p>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
