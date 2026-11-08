@@ -59,11 +59,9 @@
   }
 
   var saveTimer = null;
-  function setSaved(text) { $("saved").textContent = text; }
   function saveNow() {
     if (!current) return;
-    var ok = store(function (s) { s.setItem(C.draftKey(today, current.genre.id), $("ta").value); return true; });
-    setSaved(ok ? "Saved" : "Not saved (storage off)");
+    store(function (s) { s.setItem(C.draftKey(today, current.genre.id), $("ta").value); });
   }
   function updateCount() {
     var n = C.wordCount($("ta").value);
@@ -85,7 +83,6 @@
     renderVideo(v);
     var draft = store(function (s) { return s.getItem(C.draftKey(today, g.id)); });
     $("ta").value = draft || "";
-    setSaved(draft ? "Saved" : "");
     updateCount();
     show("editor");
     if (store(function (s) { return s.getItem("reflectype:notebook"); }) === "1") setNotebook(true);
@@ -94,7 +91,7 @@
 
   var ta = $("ta");
   ta.addEventListener("input", function () {
-    updateCount(); setSaved("Saving\u2026");
+    updateCount();
     clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 400);
   });
   // Paste is turned off to nudge people to write in their own words. Typing is always accepted.
