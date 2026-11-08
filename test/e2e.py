@@ -56,7 +56,7 @@ send("Input.insertText", text="Typing works. It is my own thought.")
 time.sleep(0.8)
 check("typed text accepted", "my own thought" in ev("document.getElementById('ta').value"))
 check("autosave stored", "my own thought" in (ev("localStorage.getItem(Object.keys(localStorage).find(k=>k.startsWith('reflectype:draft')))") or ""))
-check("saved indicator", ev("document.getElementById('saved').textContent") == "Saved")
+check("no saved indicator", ev("document.getElementById('saved')") is None)
 blocked = ev("""(()=>{const t=document.getElementById('ta');const e=new ClipboardEvent('paste',{clipboardData:new DataTransfer(),bubbles:true,cancelable:true});t.dispatchEvent(e);
  const d=new DragEvent('drop',{bubbles:true,cancelable:true});t.dispatchEvent(d);return e.defaultPrevented&&d.defaultPrevented})()""")
 check("paste and drop blocked", blocked)
