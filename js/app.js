@@ -14,12 +14,12 @@
 
   /* ---------- home ---------- */
   $("today").textContent = longDate;
-  CFG.genres.forEach(function (g) {
+  CFG.genres.forEach(function (g, i) {
     var a = document.createElement("a");
     a.className = "g sketch";
     a.href = "#/g/" + g.id;
     a.textContent = g.name;
-    $("genres").appendChild(a);
+    (i < 6 ? $("genres-top") : $("genres-bottom")).appendChild(a);
   });
 
   /* ---------- views ---------- */
@@ -169,7 +169,7 @@
 
   $("copy").addEventListener("click", function () {
     var txt = $("copybox").textContent;
-    function done(ok) { if (ok) markExport(); $("toast").textContent = ok ? "Copied. Paste it into your LinkedIn post." : "Couldn't copy. Select the text above and copy it."; }
+    function done(ok) { $("toast").textContent = ok ? "Copied. Paste it into your LinkedIn post." : "Couldn't copy. Select the text above and copy it."; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { done(true); }, function () { fallback(); });
     else fallback();
     function fallback() {
