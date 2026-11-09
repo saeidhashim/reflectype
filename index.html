@@ -36,7 +36,9 @@
         <div class="video" id="video"></div>
         <p id="video-status" class="vnote" role="status"></p>
         <div class="vcontrols" id="vcontrols" aria-label="Video controls">
+          <button class="vc sketch" id="vc-back" type="button" aria-label="Back 5 seconds" title="Back 5 seconds"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4v5h5"/><path d="M3.5 9a9 9 0 1 1-1.2 5.2"/></svg></button>
           <button class="vc sketch" id="vc-play" type="button" aria-label="Play" title="Play"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path id="vc-play-icon" d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/></svg></button>
+          <button class="vc sketch" id="vc-fwd" type="button" aria-label="Forward 5 seconds" title="Forward 5 seconds"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4v5h-5"/><path d="M20.5 9a9 9 0 1 0 1.2 5.2"/></svg></button>
           <span class="vc-volwrap"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 9H3v6h3.5L11 19z" fill="currentColor" stroke="none"/><path d="M14.5 9.5a4 4 0 0 1 0 5"/><path d="M16.8 7.2a7.5 7.5 0 0 1 0 9.6"/></svg><input type="range" id="vc-vol" min="0" max="100" value="80" aria-label="Volume"></span>
           <a class="btn sketch left-export" id="export-link-2" href="#/">Export</a>
         </div>
@@ -97,6 +99,6 @@
 </div>
 <script src="js/data.js?v=7"></script>
 <script src="js/core.js?v=5"></script>
-<script src="js/app.js?v=17"></script>
+<script src="js/app.js?v=18"></script>
 </body>
 </html>
