@@ -14,10 +14,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .brand span{color:var(--mute);font-size:13px}
 .view{display:none}.view.on{display:block}
 /* home */
-.date{margin:72px 0 6px;font-size:15px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase}
-.big{font-size:60px;line-height:1.04;margin:0 0 14px;font-weight:600;letter-spacing:-.01em}
+.hero{max-width:1120px;margin:36px auto 0;text-align:center}
+.date{margin:30px 0 8px;font-size:15px;color:var(--mute);letter-spacing:.14em;text-transform:uppercase}
+.big{font-size:60px;line-height:1.04;margin:0;font-weight:600;letter-spacing:-.01em}
 .sub{font-size:19px;color:var(--mute);margin:0 0 48px}
-.genres{display:flex;flex-wrap:wrap;gap:30px 22px;align-items:center;padding:10px 4px}
+.genres{display:flex;flex-wrap:wrap;gap:28px 22px;align-items:center;justify-content:center;padding:6px 4px}
+.genres.bottom{margin-top:30px}
 .g{padding:16px 24px;font-size:19px;white-space:nowrap}
 .g small{display:block;font-size:12px;color:var(--mute);margin-top:2px;letter-spacing:.03em}
 .g:hover{background:rgba(29,27,24,.06);border-radius:14px}
@@ -66,7 +68,7 @@ textarea::-webkit-scrollbar-thumb:hover{background:rgba(29,27,24,.5)}
 .hint{font-size:13.5px;color:var(--mute);margin-top:16px;line-height:1.55}
 .cap{font-size:12.5px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px}
 @media(max-width:760px){
-.wrap{padding:22px 20px 36px}.date{margin-top:44px}.big{font-size:40px}.sub{font-size:16.5px;margin-bottom:32px}
+.wrap{padding:22px 20px 36px}.hero{margin-top:20px}.date{margin-top:20px}.big{font-size:40px}.sub{font-size:16.5px;margin-bottom:32px}
 .genres{gap:24px 14px}.pad textarea{min-height:300px}.g{font-size:17px;padding:12px 18px!important}.g:nth-child(n){font-size:17px}
 .split,.xwrap{grid-template-columns:1fr;gap:20px}
 .bar{flex-wrap:wrap;gap:8px 12px}.title{order:3;flex-basis:100%}
@@ -77,7 +79,7 @@ body[data-view=home] .brand .tag,body[data-view=editor] .brand .tag{display:none
 .streak{display:inline-flex;align-items:center;gap:5px;font-size:14.5px;color:var(--mute);letter-spacing:.03em}
 .streak svg{display:block;filter:url(#rough)}
 .streak b{color:var(--ink);font-weight:600;font-size:15px}
-.big{margin-bottom:56px}
+/* hero spacing handled by .hero */
 
 .icon{width:46px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--ink);margin-left:auto}
 .nbhead{display:none}
