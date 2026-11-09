@@ -97,8 +97,6 @@ textarea::-webkit-scrollbar-thumb:hover{background:rgba(29,27,24,.5)}
 .bar{flex-wrap:wrap;gap:8px 12px}.title{order:3;flex-basis:100%}
 .pad{min-height:420px}.foot{flex-direction:column;gap:6px}
 }
-body[data-view=home] .brand .tag,body[data-view=editor] .brand .tag{display:none}
-.brand-right{display:flex;align-items:center;gap:14px}
 /* hero spacing handled by .hero */
 
 .icon{width:46px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--ink);margin-left:auto}
@@ -220,4 +218,4 @@ body[data-view=export] .wrap{padding-bottom:20px}
   .obtn{opacity:1;transform:none}
   .xhint{opacity:1}
   .printer{display:none}
-         }
+           }
