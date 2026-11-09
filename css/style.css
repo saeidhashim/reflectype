@@ -99,9 +99,6 @@ textarea::-webkit-scrollbar-thumb:hover{background:rgba(29,27,24,.5)}
 }
 body[data-view=home] .brand .tag,body[data-view=editor] .brand .tag{display:none}
 .brand-right{display:flex;align-items:center;gap:14px}
-.streak{display:inline-flex;align-items:center;gap:6px;font-size:15px;color:var(--mute);letter-spacing:.03em}
-.streak svg{display:block;width:24px;height:24px;filter:url(#rough-soft)}
-.streak b{color:var(--ink);font-weight:600;font-size:16px}
 /* hero spacing handled by .hero */
 
 .icon{width:46px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--ink);margin-left:auto}
