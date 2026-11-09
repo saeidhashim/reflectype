@@ -254,7 +254,25 @@
     runPress();
   }
 
+  // A brief tactile response acknowledges the click, not the action's outcome.
+  // No persistent transform or success label is left behind.
+  function buttonPress(button) {
+    if (!button.animate) return;
+    if (button._pressFeedback) button._pressFeedback.cancel();
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var frames = reduced
+      ? [{ opacity: 1 }, { opacity: 0.65, offset: 0.35 }, { opacity: 1 }]
+      : [{ transform: "translateY(0)" },
+         { transform: "translateY(2px)", offset: 0.35 },
+         { transform: "translateY(0)" }];
+    button._pressFeedback = button.animate(frames, {
+      duration: reduced ? 180 : 280,
+      easing: "ease-out"
+    });
+  }
+
   $("copy").addEventListener("click", function () {
+    buttonPress(this);
     var txt = C.formatShareText(currentText(), current.video.tags, CFG.brandHandle);
     function done(ok) { $("toast").textContent = ok ? "" : "Couldn't copy. Select the text on the page and copy it."; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { done(true); }, function () { fallback(); });
@@ -268,6 +286,7 @@
   });
 
   $("dl").addEventListener("click", function () {
+    buttonPress(this);
     $("card").toBlob(function (b) {
       var a = document.createElement("a");
       a.href = URL.createObjectURL(b);
