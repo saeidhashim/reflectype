@@ -48,7 +48,7 @@ window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "science";
   }
 ];
 
-// Verified ad-free, rights-cleared narration-only videos (audio-verified 2026-11-09).
+// Verified ad-free, rights-cleared videos (2026-11-09).
 window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "technology"; })[0].videos = [
   { title: "Graphene Applications: The Internet of Things", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a0/Simpleshow_foundation_Graphene_Applications_The_Internet_of_Things.webm/Simpleshow_foundation_Graphene_Applications_The_Internet_of_Things.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:Simpleshow_foundation_Graphene_Applications_The_Internet_of_Things.webm", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", credit: "Simpleshow foundation \u00b7 via Wikimedia Commons \u00b7 CC BY-SA 4.0." }
 ];
@@ -84,4 +84,15 @@ window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "sports"; 
 ];
 window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "society"; })[0].videos = [
   { title: "The Political Spectrum", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/71/Simpleshow_foundation_The_Political_Spectrum.webm/Simpleshow_foundation_The_Political_Spectrum.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:Simpleshow_foundation_The_Political_Spectrum.webm", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", credit: "Simpleshow foundation \u00b7 via Wikimedia Commons \u00b7 CC BY-SA 4.0." }
+];
+
+// Gap genres added 2026-11-09 (music permitted per owner clarification).
+window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "cyber"; })[0].videos = [
+  { title: "Cybersecurity Awareness Spot: AI Spoof Calling", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e2/Cybersecurity_Awareness_Spot_%281080p%29_%28996720%29.webm/Cybersecurity_Awareness_Spot_%281080p%29_%28996720%29.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:_Cybersecurity_Awareness_Spot_(1080p)_(996720).webm", licenseUrl: "https://www.usa.gov/government-works", credit: "U.S. Air Force \u00b7 via Wikimedia Commons \u00b7 Public domain (U.S. government work)." }
+];
+window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "gaming"; })[0].videos = [
+  { title: "Should Video Games Be Viewed as Art?", src: "https://archive.org/download/ignite-portland-11-mc-kenna-pickett-should-video-games-be-viewed-as-art/Ignite%20Portland%2011%20-%20McKenna%20Pickett%20%E2%80%94%20Should%20Video%20Games%20be%20Viewed%20as%20Art.ia.mp4", source: "https://archive.org/details/ignite-portland-11-mc-kenna-pickett-should-video-games-be-viewed-as-art", licenseUrl: "https://creativecommons.org/licenses/by-nc-sa/4.0/", credit: "McKenna Pickett \u00b7 Ignite Portland \u00b7 via Internet Archive \u00b7 CC BY-NC-SA 4.0." }
+];
+window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "philosophy"; })[0].videos = [
+  { title: "Nietzsche: God Is Dead", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f6/Nietzsche_%E2%80%93_God_Is_Dead_%28explainer_video_by_Sprouts%29.webm/Nietzsche_%E2%80%93_God_Is_Dead_%28explainer_video_by_Sprouts%29.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:Nietzsche_%E2%80%93_God_Is_Dead_(explainer_video_by_Sprouts).webm", licenseUrl: "https://creativecommons.org/licenses/by/3.0/", credit: "Sprouts \u00b7 via Wikimedia Commons \u00b7 CC BY 3.0." }
 ];
