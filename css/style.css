@@ -162,3 +162,62 @@ body[data-view=editor] .nbdate{display:none}
 #vc-vol::-moz-range-track{height:2px;background:var(--line);border-radius:2px}
 #vc-vol::-moz-range-thumb{width:11px;height:11px;background:var(--paper);border:2px solid var(--line);border-radius:7px 4px 8px 4px/4px 8px 4px 7px}
 #vc-vol:disabled{opacity:.35}
+
+/* v12: printer export - a little press prints your card, then your page */
+.stage{position:relative;margin-top:4px;display:flex;flex-direction:column}
+.outputs{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start;max-width:1040px;margin:0 auto;width:100%}
+.out{margin:0;display:flex;flex-direction:column;gap:16px;opacity:0;will-change:transform,clip-path;clip-path:inset(0 0 0 0)}
+.out .card{box-shadow:0 14px 34px rgba(29,27,24,.16);transform:rotate(-.5deg)}
+.out .sheet{box-shadow:0 14px 34px rgba(29,27,24,.14);transform:rotate(.4deg)}
+.obtn{align-self:center;opacity:0;transform:translateY(10px)}
+.go #out-page{animation:feedsettle 3.05s ease .35s both}
+.go #out-card{animation:feedsettle 3.05s ease 4.05s both}
+.go #copy{animation:btnin .5s ease 3.55s both}
+.go #dl{animation:btnin .5s ease 7.25s both}
+.go .printer{animation:printerbye .8s ease 7.0s both}
+.go .xhint{animation:btnin .6s ease 8.1s both}
+@keyframes btnin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes printerbye{to{opacity:0;transform:translateY(14px) scale(.94)}}
+@keyframes feedsettle{
+  0%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(.22) rotate(.6deg);clip-path:inset(0 0 100% 0)}
+  3%{opacity:1;transform:translate(var(--sx),calc(var(--sy) - var(--rise)*.08)) scale(.22) rotate(.5deg);clip-path:inset(0 0 92% 0)}
+  7%{transform:translate(var(--sx),calc(var(--sy) - var(--rise)*.24)) scale(.22) rotate(-.5deg);clip-path:inset(0 0 76% 0)}
+  13%{transform:translate(var(--sx),calc(var(--sy) - var(--rise)*.24)) scale(.22) rotate(.4deg);clip-path:inset(0 0 76% 0)}
+  26%{transform:translate(var(--sx),calc(var(--sy) - var(--rise)*.58)) scale(.22) rotate(-.4deg);clip-path:inset(0 0 42% 0)}
+  33%{transform:translate(var(--sx),calc(var(--sy) - var(--rise)*.58)) scale(.22) rotate(.3deg);clip-path:inset(0 0 42% 0)}
+  48%{transform:translate(var(--sx),calc(var(--sy) - var(--rise)*.88)) scale(.22) rotate(-.2deg);clip-path:inset(0 0 12% 0)}
+  57%{transform:translate(var(--sx),calc(var(--sy) - var(--rise))) scale(.22) rotate(0deg);clip-path:inset(0 0 0 0)}
+  66%{transform:translate(var(--sx),calc(var(--sy) - var(--rise) - 26px)) scale(.22) rotate(0deg);clip-path:inset(0 0 0 0)}
+  88%{transform:translate(0,0) scale(1.035) rotate(0deg);clip-path:inset(0 0 0 0)}
+  95%{transform:translate(0,0) scale(.996) rotate(0deg);clip-path:inset(0 0 0 0)}
+  100%{opacity:1;transform:translate(0,0) scale(1) rotate(0deg);clip-path:inset(0 0 0 0)}
+}
+.printer{margin:4px auto 0;text-align:center;pointer-events:none}
+.printer-inner{display:inline-block;transform-origin:50% 90%}
+.printer.printing .printer-inner{animation:wig .34s linear infinite}
+@keyframes wig{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(.6px,-.5px) rotate(.35deg)}50%{transform:translate(-.5px,.3px) rotate(-.3deg)}75%{transform:translate(.4px,.5px) rotate(.2deg)}}
+.printer.printing #pled{fill:#1d1b18;animation:led .9s ease-in-out infinite}
+@keyframes led{0%,100%{opacity:1}50%{opacity:.2}}
+.pcap{font-size:13px;font-style:italic;color:var(--mute);min-height:18px;margin-top:2px;letter-spacing:.02em}
+.sheet{background:#fbf7ee;padding:22px 26px 20px;max-height:360px;overflow:hidden;position:relative}
+.sheet-text{font-size:15.5px;line-height:1.7;white-space:pre-wrap;-webkit-mask-image:linear-gradient(#000 62%,rgba(0,0,0,.22));mask-image:linear-gradient(#000 62%,rgba(0,0,0,.22))}
+.sheet-text.empty{color:var(--mute);font-style:italic;-webkit-mask-image:none;mask-image:none}
+.sheetrule,.sheet-tags,.sheet-handle{display:none}
+.sheetrule{margin:16px 0 12px;height:4px}
+.sheetrule::before{border-top-width:1.5px;top:1px}
+.sheet-tags{color:var(--accent);font-size:14.5px;line-height:1.5}
+.sheet-handle{margin-top:6px;font-size:14.5px;color:var(--mute)}
+.xhint{opacity:0;text-align:center;max-width:520px;margin:36px auto 0}
+body[data-view=export] .wrap{padding-bottom:20px}
+.stage+.toast,body[data-view=export] .toast{text-align:center}
+@media(max-width:760px){
+  .outputs{grid-template-columns:1fr;gap:30px}
+  .sheet{max-height:none}
+  .printer{order:-1;margin:2px auto 20px}
+}
+@media (prefers-reduced-motion: reduce){
+  .out{opacity:1}
+  .obtn{opacity:1;transform:none}
+  .xhint{opacity:1}
+  .printer{display:none}
+         }
