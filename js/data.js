@@ -1,7 +1,8 @@
 /*
   Content and settings for Reflectype v1.
-  Videos are PLACEHOLDERS. To add a real video later, set `youtubeId` on an entry
-  (only for videos that allow embedding) and replace the placeholder title/tags.
+  Technology & AI has one real video. All other genres still use PLACEHOLDERS.
+  To add a real video, set `youtubeId` on an entry (only videos that allow embedding)
+  and replace the placeholder title/tags.
 */
 window.REFLECTYPE_CONFIG = {
   // Saeid's pick for now (2026-11-09); swap for the real LinkedIn page username once it exists.
@@ -34,3 +35,12 @@ window.REFLECTYPE_CONFIG.genres.forEach(function (g) {
     return { title: "Sample video " + n + ": " + g.name, youtubeId: "", tags: g.tags, placeholder: true };
   });
 });
+
+// Technology & AI: one real video (3Blue1Brown, embedding confirmed via YouTube oEmbed 2026-11-09).
+window.REFLECTYPE_CONFIG.genres[0].videos = [
+  {
+    title: "But what is a neural network? | Deep learning chapter 1",
+    youtubeId: "aircAruvnKk",
+    tags: ["Technology", "AI", "NeuralNetworks", "MachineLearning", "DeepLearning"]
+  }
+];
