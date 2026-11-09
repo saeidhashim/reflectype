@@ -1,4 +1,4 @@
-# Reflectype
+# reflectype
 
 Watch something. Write your perspective.
 
@@ -13,7 +13,7 @@ This is **v1**: the full flow works, with placeholder videos.
 - Notebook view (desktop only): an open-notebook layout with the video page on the left and ruled writing page on the right. Phones use the normal stacked page.
 - Export:
   - Text to copy: your text, a blank line, five hashtags, then the brand handle.
-  - A share card (PNG, drawn in the browser) with Reflectype's own artwork, the genre, title and date.
+  - A share card (PNG, drawn in the browser) with reflectype's own artwork, the genre, title and date.
 - One video per genre per day: entries rotate by date.
 
 ## Not in v1 (on purpose)
