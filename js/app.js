@@ -43,21 +43,71 @@
   /* ---------- editor ---------- */
   function renderVideo(v) {
     var box = $("video");
+    if (ytPlayer && ytPlayer.destroy) { try { ytPlayer.destroy(); } catch (e) {} }
+    ytPlayer = null;
+    ytReady = false;
+    updateControls();
+    setPlayIcon(false);
     box.className = "video";
     box.innerHTML = "";
     if (v.youtubeId) {
       box.classList.add("has-embed");
       var f = document.createElement("iframe");
-      f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(v.youtubeId);
+      f.id = "ytframe";
+      var origin = location.protocol.indexOf("http") === 0 ? "&origin=" + encodeURIComponent(location.origin) : "";
+      f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(v.youtubeId) + "?enablejsapi=1&rel=0" + origin;
       f.title = v.title;
       f.allow = "encrypted-media; picture-in-picture";
       f.allowFullscreen = true;
       f.loading = "lazy";
       box.appendChild(f);
+      ensureYT(function () {
+        ytPlayer = new YT.Player("ytframe", { events: {
+          onReady: function () { ytReady = true; ytPlayer.setVolume(+$("vc-vol").value); updateControls(); },
+          onStateChange: function (e) { setPlayIcon(e.data === YT.PlayerState.PLAYING); }
+        } });
+      });
       return;
     }
     box.innerHTML = '<div class="play"><i></i></div><div>Video placeholder</div><div class="vnote">Real videos arrive in a later version.</div>';
   }
+
+  /* ---------- video controls (YouTube IFrame API) ---------- */
+  var ytPlayer = null, ytReady = false, ytApiLoading = false, ytApiQueue = [];
+  window.onYouTubeIframeAPIReady = function () {
+    ytApiQueue.forEach(function (cb) { cb(); });
+    ytApiQueue = [];
+  };
+  function ensureYT(cb) {
+    if (window.YT && window.YT.Player) return cb();
+    ytApiQueue.push(cb);
+    if (ytApiLoading) return;
+    ytApiLoading = true;
+    var s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(s);
+  }
+  function updateControls() {
+    var off = !ytReady;
+    ["vc-back", "vc-play", "vc-fwd", "vc-vol"].forEach(function (id) { $(id).disabled = off; });
+  }
+  function setPlayIcon(playing) {
+    $("vc-play-icon").setAttribute("d", playing ? "M7.5 5.5h3.4v13H7.5zM13.1 5.5h3.4v13h-3.4z" : "M8 5.5v13l10.5-6.5z");
+    $("vc-play").setAttribute("aria-label", playing ? "Pause" : "Play");
+    $("vc-play").title = playing ? "Pause" : "Play";
+  }
+  $("vc-back").addEventListener("click", function () { if (ytReady) ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() - 5), true); });
+  $("vc-fwd").addEventListener("click", function () { if (ytReady) ytPlayer.seekTo(ytPlayer.getCurrentTime() + 5, true); });
+  $("vc-play").addEventListener("click", function () {
+    if (!ytReady) return;
+    if (ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) ytPlayer.pauseVideo(); else ytPlayer.playVideo();
+  });
+  $("vc-vol").addEventListener("input", function () {
+    if (!ytReady) return;
+    ytPlayer.unMute();
+    ytPlayer.setVolume(+this.value);
+  });
+  updateControls();
 
   var saveTimer = null;
   function saveNow() {
@@ -74,12 +124,13 @@
     if (!g) { location.hash = "#/"; return; }
     var v = C.pickVideo(g.videos, today);
     current = { genre: g, video: v };
-    $("e-genre").textContent = g.name + " \u00b7 Today";
+    $("e-genre").textContent = g.name;
     $("e-title").textContent = v.title;
     $("n-genre").textContent = g.name;
     $("n-title").textContent = v.title;
     $("n-date").textContent = shortDate;
     $("export-link").href = "#/g/" + g.id + "/export";
+    $("export-link-2").href = "#/g/" + g.id + "/export";
     document.title = v.title + " - Reflectype";
     renderVideo(v);
     var draft = store(function (s) { return s.getItem(C.draftKey(today, g.id)); });
