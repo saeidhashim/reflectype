@@ -18,7 +18,13 @@ window.REFLECTYPE_CONFIG = {
     { id: "design", name: "Design & Creativity", hue: 300, tags: ["Design", "Creativity", "Art", "Craft", "Inspiration"] },
     { id: "nature", name: "Nature", hue: 100, tags: ["Nature", "Environment", "Wildlife", "Climate", "Sustainability"] },
     { id: "society", name: "Society & Ethics", hue: 45, tags: ["Society", "Ethics", "Debate", "Perspective", "Thinking"] },
-    { id: "cyber", name: "Cybersecurity", hue: 245, tags: ["Cybersecurity", "Privacy", "InfoSec", "Security", "Technology"] }
+    { id: "cyber", name: "Cybersecurity", hue: 245, tags: ["Cybersecurity", "Privacy", "InfoSec", "Security", "Technology"] },
+    { id: "music", name: "Music", hue: 285, tags: ["Music", "Songs", "Artists", "Albums", "Culture"] },
+    { id: "gaming", name: "Gaming", hue: 350, tags: ["Gaming", "VideoGames", "Games", "Esports", "Play"] },
+    { id: "food", name: "Food & Cooking", hue: 35, tags: ["Food", "Cooking", "Recipes", "Cuisine", "Taste"] },
+    { id: "travel", name: "Travel", hue: 195, tags: ["Travel", "Adventure", "Places", "Explore", "Wanderlust"] },
+    { id: "movies", name: "Movies & TV", hue: 255, tags: ["Movies", "TV", "Film", "Cinema", "Storytelling"] },
+    { id: "philosophy", name: "Philosophy", hue: 80, tags: ["Philosophy", "Ideas", "Thinking", "Wisdom", "Questions"] }
   ]
 };
 
