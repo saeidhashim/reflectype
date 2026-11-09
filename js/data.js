@@ -4,8 +4,8 @@
   (only for videos that allow embedding) and replace the placeholder title/tags.
 */
 window.REFLECTYPE_CONFIG = {
-  // Replace with the real LinkedIn page username once it exists.
-  brandHandle: "@yourbrand",
+  // Saeid's pick for now (2026-11-09); swap for the real LinkedIn page username once it exists.
+  brandHandle: "@reflectype",
   genres: [
     { id: "technology", name: "Technology & AI", hue: 262, tags: ["Technology", "AI", "Innovation", "Future", "Tech"] },
     { id: "science", name: "Science & Space", hue: 215, tags: ["Science", "Space", "Discovery", "Curiosity", "Research"] },
