@@ -27,18 +27,8 @@
   function show(view) {
     document.body.dataset.view = view;
     ["home", "editor", "export"].forEach(function (v) { $(v).classList.toggle("on", v === view); });
-    if (view !== "editor") setNotebook(false);
     window.scrollTo(0, 0);
   }
-
-  function setNotebook(on) {
-    if (on && window.matchMedia("(max-width:760px)").matches) on = false; // no notebook on phones
-    document.body.classList.toggle("nb", on);
-    $("nbtoggle").setAttribute("aria-pressed", on ? "true" : "false");
-    store(function (s) { s.setItem("reflectype:notebook", on ? "1" : "0"); });
-  }
-  $("nbtoggle").addEventListener("click", function () { setNotebook(!document.body.classList.contains("nb")); });
-  window.matchMedia("(max-width:760px)").addEventListener("change", function (e) { if (e.matches) setNotebook(false); });
 
   /* ---------- editor ---------- */
   function renderVideo(v) {
@@ -137,7 +127,6 @@
     $("ta").value = draft || "";
     updateCount();
     show("editor");
-    if (store(function (s) { return s.getItem("reflectype:notebook"); }) === "1") setNotebook(true);
     if (!window.matchMedia("(max-width:760px)").matches) $("ta").focus({ preventScroll: true });
   }
 
