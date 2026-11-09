@@ -155,29 +155,83 @@
     return lines;
   }
 
-  // Original artwork only: no frame or thumbnail from the video is used.
+  // Share card (1280x720): white top, grey footer band, video thumbnail on the right.
+  var thumbCache = {};
+  function loadThumb(id, cb) {
+    var c = thumbCache[id];
+    if (c) { if (c.done) cb(c.img); else c.waiters.push(cb); return; }
+    c = thumbCache[id] = { img: null, done: false, waiters: [cb] };
+    function finish(img) { c.img = img; c.done = true; c.waiters.splice(0).forEach(function (f) { f(img); }); }
+    function tryLoad(name, next) {
+      var im = new Image();
+      im.crossOrigin = "anonymous";
+      im.onload = function () { finish(im); };
+      im.onerror = next;
+      im.src = "https://i.ytimg.com/vi/" + encodeURIComponent(id) + "/" + name + ".jpg";
+    }
+    tryLoad("maxresdefault", function () { tryLoad("hqdefault", function () { finish(null); }); });
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath();
+  }
+
+  function cardDate() {
+    var d = new Date();
+    return d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+  }
+
   function drawCard() {
-    var cv = $("card"), ctx = cv.getContext("2d"), W = cv.width, H = cv.height, g = current.genre;
-    var grad = ctx.createLinearGradient(0, 0, W, H);
-    grad.addColorStop(0, "hsl(" + g.hue + ",18%,22%)");
-    grad.addColorStop(1, "hsl(" + g.hue + ",14%,12%)");
-    ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
-    ctx.save(); ctx.globalAlpha = 0.07; ctx.strokeStyle = "#f4efe4"; ctx.lineWidth = 3;
-    for (var x = -H; x < W; x += 46) { ctx.beginPath(); ctx.moveTo(x, H); ctx.lineTo(x + H, 0); ctx.stroke(); }
-    ctx.restore();
-    var serif = '"Noto Serif", Georgia, "Times New Roman", serif';
-    ctx.font = "600 34px " + serif;
-    var bw = ctx.measureText("reflectype").width + 48;
-    ctx.fillStyle = "#f4efe4"; ctx.fillRect(60, 56, bw, 62);
-    ctx.fillStyle = "#1d1b18"; ctx.textBaseline = "middle";
-    ctx.fillText("reflectype", 84, 88);
-    ctx.fillStyle = "#d9d3c5"; ctx.font = "26px " + serif; ctx.textBaseline = "alphabetic";
-    ctx.fillText(g.name.toUpperCase(), 60, 392);
-    ctx.fillStyle = "#f4efe4"; ctx.font = "600 62px " + serif;
-    var lines = wrap(ctx, current.video.title, W - 120).slice(0, 3), y = 466;
-    lines.forEach(function (l) { ctx.fillText(l, 60, y); y += 74; });
-    ctx.fillStyle = "#a79f8e"; ctx.font = "26px " + serif; ctx.textAlign = "right";
-    ctx.fillText(shortDate, W - 60, H - 40); ctx.textAlign = "left";
+    var cv = $("card"), ctx = cv.getContext("2d"), W = cv.width, H = cv.height;
+    var video = current.video, genre = current.genre;
+    var serif = '"Times New Roman", Times, "Liberation Serif", Georgia, serif';
+    var ink = "#444444";
+    var box = { x: 401, y: 40, w: 846, h: 503 };
+    function paint(img) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = "#c8c5bf"; ctx.fillRect(0, 480, W, H - 480);
+      ctx.textBaseline = "alphabetic"; ctx.textAlign = "left"; ctx.fillStyle = ink;
+      ctx.font = "72px " + serif; ctx.fillText("reflectype", 33, 100);
+      ctx.font = "40px " + serif; ctx.fillText(cardDate(), 33, 186);
+      ctx.fillStyle = ink; ctx.fillRect(33, 225, 343, 2);
+      ctx.font = "40px " + serif; ctx.fillText(genre.name, 33, 300);
+      var size = 40, lines;
+      for (; size >= 26; size -= 2) {
+        ctx.font = size + "px " + serif;
+        lines = wrap(ctx, video.title, 343);
+        if (lines.length * (size + 12) <= 150) break;
+      }
+      var y = 370;
+      lines.slice(0, 4).forEach(function (l) { ctx.fillText(l, 33, y); y += size + 12; });
+      ctx.save();
+      roundRect(ctx, box.x, box.y, box.w, box.h, 40); ctx.clip();
+      ctx.fillStyle = "#000000"; ctx.fillRect(box.x, box.y, box.w, box.h);
+      if (img) {
+        var sc = Math.max(box.w / img.width, box.h / img.height);
+        var dw = img.width * sc, dh = img.height * sc;
+        ctx.drawImage(img, box.x + (box.w - dw) / 2, box.y + (box.h - dh) / 2, dw, dh);
+      }
+      ctx.restore();
+      ctx.fillStyle = ink; ctx.textAlign = "center";
+      ctx.font = "46px " + serif;
+      ctx.fillText("Head over to reflectype to create your own reflections!", W / 2, 650);
+      ctx.textAlign = "left";
+    }
+    var token = (drawCard.token = (drawCard.token || 0) + 1);
+    paint(null);
+    cv._ready = !video.youtubeId;
+    if (video.youtubeId) {
+      loadThumb(video.youtubeId, function (img) {
+        if (token === drawCard.token) { paint(img); }
+        if (token === drawCard.token) cv._ready = true;
+        var q = cv._waiting; cv._waiting = null; if (q) q();
+      });
+    }
   }
 
   // The press: printer feeds the card up out of its slot, then the page.
@@ -287,7 +341,9 @@
 
   $("dl").addEventListener("click", function () {
     buttonPress(this);
-    $("card").toBlob(function (b) {
+    var cvs = $("card");
+    if (!cvs._ready) { cvs._waiting = function () { $("dl").click(); }; return; }
+    cvs.toBlob(function (b) {
       var a = document.createElement("a");
       a.href = URL.createObjectURL(b);
       a.download = "reflectype-" + current.genre.id + "-" + today + ".png";
