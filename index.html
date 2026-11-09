@@ -6,10 +6,10 @@
 <title>Reflectype</title>
 <meta name="description" content="Watch something. Write your perspective.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%231d1b18%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-size=%2720%27 text-anchor=%27middle%27 fill=%27%23f4efe4%27 font-family=%27serif%27%3ER%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="css/style.css?v=10">
+<link rel="stylesheet" href="css/style.css?v=11">
 </head>
 <body data-view="home">
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter><filter id="rough-soft" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="1.3"/></filter></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="rough" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter><filter id="rough-pen" x="-8%" y="-8%" width="116%" height="116%"><feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="3" seed="7"/><feDisplacementMap in="SourceGraphic" scale="4.6"/></filter><filter id="rough-soft" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="1.3"/></filter></svg>
 <div class="wrap">
   <div class="brand"><b><a href="#/">Reflectype</a></b><span class="brand-right"><span class="tag">Watch something. Write your perspective.</span></span></div>
   <div style="margin-top:12px"><hr class="rule"></div>
@@ -53,27 +53,51 @@
   <section id="export" class="view">
     <div class="bar">
       <a class="back" id="back-writing" href="#/">&larr; Back to writing</a>
-      <div class="title"><small>Export</small>Preview, copy, then post on LinkedIn yourself</div>
+      <div class="title"><small>Export</small><span id="x-sub">Hot off the press</span></div>
     </div>
-    <div class="xwrap">
-      <div>
-        <p class="cap">Card</p>
-        <div class="card"><canvas id="card" width="1200" height="630" aria-label="Share card preview"></canvas></div>
-        <div class="row"><button class="btn sketch" id="dl" type="button">Download card</button></div>
-        <p class="hint">The card uses Reflectype's own artwork, not a frame or thumbnail from the video.</p>
+    <div class="stage" id="stage">
+      <div class="outputs">
+        <figure class="out" id="out-page">
+          <div class="sheet sketch thin" id="sheet">
+            <div class="sheet-text" id="sheet-text"></div>
+            <hr class="rule sheetrule">
+            <div class="sheet-tags" id="sheet-tags"></div>
+            <div class="sheet-handle" id="sheet-handle"></div>
+          </div>
+          <button class="btn solid obtn" id="copy" type="button">Copy text</button>
+        </figure>
+        <figure class="out" id="out-card">
+          <div class="card"><canvas id="card" width="1200" height="630" aria-label="Share card preview"></canvas></div>
+          <button class="btn sketch obtn" id="dl" type="button">Download card</button>
+        </figure>
       </div>
-      <div>
-        <p class="cap">Text to copy</p>
-        <div class="copybox sketch thin" id="copybox"></div>
-        <div class="row"><button class="btn solid" id="copy" type="button">Copy text</button></div>
-        <div class="toast" id="toast" role="status" aria-live="polite"></div>
-        <p class="hint">Paste into LinkedIn. When you type the @ at the end, pick our page from LinkedIn's list so it becomes a real tag. Nothing is posted for you.</p>
+      <div class="printer" id="printer" aria-hidden="true">
+        <div class="printer-inner">
+          <svg viewBox="0 0 280 170" width="300" height="182">
+            <g filter="url(#rough-pen)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M84 58 Q81 36 78 14 M196 58 Q199 36 202 14" stroke="#1d1b18" stroke-width="2.6"/>
+              <path d="M36 56 L244 57 Q261 58 260 74 L259 124 Q258 142 242 141 L38 142 Q21 141 21 126 L22 74 Q23 57 36 56 Z" fill="#f4efe4" stroke="#1d1b18" stroke-width="2.8"/>
+              <path d="M36 56 L244 57 Q261 58 260 74 L259 124 Q258 142 242 141 L38 142 Q21 141 21 126 L22 74 Q23 57 36 56 Z" transform="translate(1.8 1.4)" stroke="#1d1b18" stroke-width="1.6" opacity=".28"/>
+              <path d="M77 61 L203 60 L197 31 L83 30 Z" fill="#f4efe4" stroke="#1d1b18" stroke-width="1.8"/>
+              <rect id="pslot" x="84" y="52" width="112" height="9" rx="4.5" fill="#1d1b18" stroke="#1d1b18" stroke-width="1.2"/>
+              <rect x="86" y="104" width="108" height="24" rx="6" stroke="#1d1b18" stroke-width="1.6" opacity=".55"/>
+              <circle cx="34" cy="68" r="2.6" fill="#1d1b18" stroke="none" opacity=".55"/>
+              <circle cx="44" cy="68" r="2.6" fill="#1d1b18" stroke="none" opacity=".55"/>
+              <circle id="pled" cx="54" cy="68" r="2.9" fill="none" stroke="#1d1b18" stroke-width="1.4" opacity=".6"/>
+              <text x="140" y="90" text-anchor="middle" font-size="15" font-weight="600" letter-spacing="1" fill="#1d1b18" stroke="none" font-family="Georgia, serif">Reflectype</text>
+              <path d="M56 152 L224 152" stroke="#1d1b18" stroke-width="2" opacity=".25"/>
+            </g>
+          </svg>
+        </div>
+        <div class="pcap" id="pcap"></div>
       </div>
     </div>
+    <p class="hint xhint">Hit Copy text and paste it into a new LinkedIn post. Then hit Download card and add the card to that post. When you type the @ at the end, pick our page from LinkedIn's list so it becomes a real tag. Done for today. Reflectype again tomorrow!</p>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
   </section>
 </div>
-<script src="js/data.js?v=4"></script>
+<script src="js/data.js?v=5"></script>
 <script src="js/core.js?v=5"></script>
-<script src="js/app.js?v=10"></script>
+<script src="js/app.js?v=11"></script>
 </body>
 </html>
