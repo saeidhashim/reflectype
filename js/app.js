@@ -121,7 +121,7 @@
     $("n-date").textContent = shortDate;
     $("export-link").href = "#/g/" + g.id + "/export";
     $("export-link-2").href = "#/g/" + g.id + "/export";
-    document.title = v.title + " - Reflectype";
+    document.title = v.title + " - reflectype";
     renderVideo(v);
     var draft = store(function (s) { return s.getItem(C.draftKey(today, g.id)); });
     $("ta").value = draft || "";
@@ -167,10 +167,10 @@
     ctx.restore();
     var serif = '"Noto Serif", Georgia, "Times New Roman", serif';
     ctx.font = "600 34px " + serif;
-    var bw = ctx.measureText("Reflectype").width + 48;
+    var bw = ctx.measureText("reflectype").width + 48;
     ctx.fillStyle = "#f4efe4"; ctx.fillRect(60, 56, bw, 62);
     ctx.fillStyle = "#1d1b18"; ctx.textBaseline = "middle";
-    ctx.fillText("Reflectype", 84, 88);
+    ctx.fillText("reflectype", 84, 88);
     ctx.fillStyle = "#d9d3c5"; ctx.font = "26px " + serif; ctx.textBaseline = "alphabetic";
     ctx.fillText(g.name.toUpperCase(), 60, 392);
     ctx.fillStyle = "#f4efe4"; ctx.font = "600 62px " + serif;
@@ -274,7 +274,7 @@
   /* ---------- routing ---------- */
   function route() {
     var m = (location.hash || "#/").match(/^#\/g\/([a-z]+)(\/export)?$/);
-    document.title = "Reflectype";
+    document.title = "reflectype";
     if (!m) { show("home"); return; }
     if (m[2]) openExport(m[1]); else openEditor(m[1]);
   }
