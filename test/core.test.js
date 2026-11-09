@@ -23,6 +23,6 @@ assert.strictEqual(C.wordCount(""), 0);
 global.window = {};
 require("../js/data.js");
 const g = window.REFLECTYPE_CONFIG.genres;
-assert.strictEqual(g.length, 12);
+assert.strictEqual(g.length, 18);
 g.forEach(x => { assert.strictEqual(x.tags.map(C.cleanTag).filter(Boolean).length, 5, x.id); assert.ok(x.videos.length >= 1, x.id); });
 console.log("core tests passed");
