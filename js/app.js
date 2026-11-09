@@ -14,12 +14,13 @@
 
   /* ---------- home ---------- */
   $("today").textContent = longDate;
-  CFG.genres.forEach(function (g, i) {
+  var genresBox = $("genres");
+  CFG.genres.forEach(function (g) {
     var a = document.createElement("a");
     a.className = "g sketch";
     a.href = "#/g/" + g.id;
     a.textContent = g.name;
-    (i < 6 ? $("genres-top") : $("genres-bottom")).appendChild(a);
+    genresBox.appendChild(a);
   });
 
   /* ---------- views ---------- */
