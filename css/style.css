@@ -231,3 +231,13 @@ body[data-view=export] .wrap{padding-bottom:20px}
 .video-credit a{color:inherit;text-underline-offset:2px}
 #video-status:empty{display:none}
 #video-status{font-size:12px;line-height:1.5}
+
+/* v15: mobile opening notice - reflectype is made for PC */
+.mobile-note{display:none}
+@media(max-width:760px){
+  .wrap{display:none!important}
+  .mobile-note{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh;padding:40px 28px;text-align:center;gap:20px}
+  .mobile-note .mn-brand{font-size:36px;font-weight:600;letter-spacing:.02em}
+  .mobile-note .mn-rule{width:72px;border-top:2px solid var(--line);filter:url(#rough)}
+  .mobile-note p{margin:0;max-width:430px;font-size:17px;line-height:1.65;color:var(--mute)}
+}
