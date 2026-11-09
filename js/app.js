@@ -47,7 +47,7 @@
       var origin = location.protocol.indexOf("http") === 0 ? "&origin=" + encodeURIComponent(location.origin) : "";
       f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(v.youtubeId) + "?enablejsapi=1&rel=0" + origin;
       f.title = v.title;
-      f.allow = "encrypted-media; picture-in-picture";
+      f.allow = "autoplay; encrypted-media; picture-in-picture";
       f.allowFullscreen = true;
       f.loading = "lazy";
       box.appendChild(f);
