@@ -109,6 +109,7 @@ body[data-view=home] .brand .tag,body[data-view=editor] .brand .tag{display:none
 .nb .icon{background:var(--ink);color:var(--paper);border-radius:12px 9px 13px 8px/9px 13px 8px 12px}
 .nb .icon::before{display:none}
 /* notebook view */
+.nb .spiral{display:none}
 .nb .bar .title{display:none}
 .nb .split{display:grid;grid-template-columns:1fr 1fr;gap:0;position:relative;max-width:1040px;margin:34px auto 0;background:#faf6ec;border-radius:10px;box-shadow:0 14px 30px rgba(60,50,30,.16),0 2px 0 #e7dfcc,0 5px 0 #efe8d6,0 8px 0 #e4dbc6;padding:0}
 .nb .split::before{content:"";position:absolute;inset:-6px;border:2px solid var(--line);border-radius:16px 12px 18px 11px/12px 18px 11px 16px;filter:url(#rough);pointer-events:none}
@@ -117,7 +118,7 @@ body[data-view=home] .brand .tag,body[data-view=editor] .brand .tag{display:none
 .nb .nbhead{display:block;margin-bottom:22px}
 .nb .nbhead small{display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
 .nb .nbhead h2{font-size:25px;line-height:1.25;margin:0 0 10px}
-.nb .nbdate{font-size:13.5px;color:var(--mute)}
+.nb .nbdate{display:none}
 .nb .video{border-radius:6px}
 .nb .pad{border-radius:0;padding:40px 44px 40px 54px;min-height:0;background:none}
 .nb .pad::before{display:none}
@@ -131,6 +132,11 @@ body[data-view=home] .brand .tag,body[data-view=editor] .brand .tag{display:none
 .nb .pad{padding:24px 22px 22px}
 .nb .pad textarea{min-height:360px;font-size:18px;margin-right:-10px;padding-right:10px}
 }
+
+/* v7 prototype: the writing pad is a spiral-bound notepad */
+.pad{background:#faf6ec;padding-top:36px}
+.spiral{position:absolute;left:22px;right:22px;top:-22px;height:42px;pointer-events:none;filter:url(#rough-soft);background-repeat:round;background-size:44px 42px;background-position:0 0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 42'%3E%3Cpath d='M15 23 C14 14 14.5 7 18.5 4.5 C23 6.5 24.5 13 25.5 21 C26.3 25.5 27.8 29.5 29.5 33' fill='none' stroke='%231d1b18' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='29.5' cy='36' r='3.4' fill='%231d1b18'/%3E%3C/svg%3E")}
+.pad textarea{line-height:30px;background-image:repeating-linear-gradient(transparent 0,transparent 29px,rgba(70,60,45,.28) 29px,rgba(70,60,45,.28) 30px);background-attachment:local;background-position:0 3px}
 
 /* v1 additions */
 button:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
@@ -151,14 +157,48 @@ textarea:focus-visible{outline:none}
 
 /* v4: larger workspace + open-book silhouette */
 @media(min-width:761px){
-body[data-view=editor]:not(.nb) .split{min-height:calc(100vh - 190px);margin-top:20px}
+body[data-view=editor]:not(.nb) .split{min-height:calc(100vh - 210px);margin-top:20px}
 body[data-view=editor]:not(.nb) .left{display:flex;flex-direction:column;justify-content:flex-start;min-width:0}
 .nb .split{max-width:1290px;border-radius:12px 9px 14px 10px/10px 14px 9px 12px;box-shadow:5px 6px 0 #ece4d1,10px 12px 0 #e3d9c2,14px 20px 34px rgba(60,50,30,.15)}
 .nb .split::after{top:6px;bottom:14px;width:76px;margin-left:-38px;-webkit-mask-image:linear-gradient(transparent,#000 56px,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(transparent,#000 56px,#000 calc(100% - 48px),transparent);background:linear-gradient(90deg,transparent calc(50% - 1px),rgba(70,58,38,.32) calc(50% - 1px),rgba(70,58,38,.32) calc(50% + 1px),transparent calc(50% + 1px)),linear-gradient(90deg,rgba(80,65,40,0),rgba(80,65,40,.14) 40%,rgba(80,65,40,.24) 50%,rgba(80,65,40,.14) 60%,rgba(80,65,40,0))}
 .nb .left{background:linear-gradient(-90deg,rgba(255,255,255,.55),rgba(255,255,255,0) 8px),linear-gradient(90deg,rgba(70,60,45,.06),rgba(70,60,45,0) 16px),linear-gradient(-90deg,rgba(80,65,40,.10),rgba(80,65,40,0) 30px)}
 .nb .pad{background:linear-gradient(90deg,rgba(255,255,255,.55),rgba(255,255,255,0) 8px),linear-gradient(-90deg,rgba(70,60,45,.06),rgba(70,60,45,0) 16px),linear-gradient(90deg,rgba(80,65,40,.10),rgba(80,65,40,0) 30px)}
 .nb .pad textarea{min-height:500px}
+/* v7: notebook fits the laptop viewport - the writing page scrolls inside, the window does not */
+body[data-view=editor].nb{overflow:hidden}
+body[data-view=editor].nb .wrap{min-height:100vh;display:flex;flex-direction:column;padding-bottom:24px}
+.nb #editor.on{display:flex;flex-direction:column;flex:1;min-height:0}
+.nb .split{flex:1;min-height:0}
+.nb .left{min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(29,27,24,.4) transparent}
+.nb .pad{min-height:0}
+.nb .pad textarea{flex:1;min-height:0}
+@supports selector(::-webkit-scrollbar){
+.nb .left::-webkit-scrollbar{width:5px}
+.nb .left::-webkit-scrollbar-track{background:transparent}
+.nb .left::-webkit-scrollbar-thumb{background:rgba(29,27,24,.32);border-radius:3px}
+}
 }
 @media(max-width:760px){
 .pad{min-height:max(440px,48vh)}
 }
+
+/* v8: simpler plain editor - genre/title above the video, video centered against the notepad, export below */
+body[data-view=editor]:not(.nb) .bar .title{display:none}
+body[data-view=editor]:not(.nb) .bar #export-link{display:none}
+body[data-view=editor]:not(.nb) .nbhead{display:block}
+body[data-view=editor]:not(.nb) .nbhead small{display:block;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+body[data-view=editor]:not(.nb) .nbhead h2{font-size:25px;line-height:1.25;margin:0}
+body[data-view=editor]:not(.nb) .nbdate{display:none}
+body[data-view=editor]:not(.nb) .left-export{margin-top:18px;align-self:center}
+.nb .left-export{display:none}
+@media(min-width:761px){
+body[data-view=editor]:not(.nb) .left{justify-content:center;gap:22px}
+}
+
+/* v8b: video controls directly under the video */
+.vcontrols{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;flex-wrap:wrap}
+.vc{width:44px;height:38px;display:flex;align-items:center;justify-content:center;color:var(--ink);background:none;border:0;cursor:pointer;padding:0}
+.vc:disabled{opacity:.35;cursor:default}
+.vc-volwrap{display:flex;align-items:center;gap:8px;color:var(--ink)}
+#vc-vol{width:110px;accent-color:var(--ink)}
+#vc-vol:disabled{opacity:.35}
