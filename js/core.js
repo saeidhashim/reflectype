@@ -49,6 +49,30 @@
     return "reflectype:draft:" + key + ":" + genreId;
   }
 
+  // A day counts as reflected when its card/text was exported (one mark per day).
+  function exportKey(key) {
+    return "reflectype:export:" + key;
+  }
+
+  // Consecutive reflected days ending today; if today is not done yet, the run
+  // ending yesterday still counts (the day is not over).
+  function streak(storage) {
+    var prefix = "reflectype:export:", days = {};
+    try {
+      for (var i = 0; i < storage.length; i++) {
+        var k = storage.key(i);
+        if (k && k.indexOf(prefix) === 0 && storage.getItem(k)) days[dayNumber(k.slice(prefix.length))] = true;
+      }
+    } catch (e) { return 0; }
+    var today = dayNumber(dateKey());
+    var start = days[today] ? today : today - 1;
+    if (!days[start]) return 0;
+    var n = 0;
+    while (days[start - n]) n++;
+    return n;
+  }
+
   return { dateKey: dateKey, dayNumber: dayNumber, pickVideo: pickVideo, cleanTag: cleanTag,
-           formatShareText: formatShareText, wordCount: wordCount, draftKey: draftKey };
+           formatShareText: formatShareText, wordCount: wordCount, draftKey: draftKey,
+           exportKey: exportKey, streak: streak };
 });
