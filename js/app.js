@@ -183,7 +183,7 @@
   // The press: printer feeds the card up out of its slot, then the page.
   // Timings mirror the CSS animation delays/durations in style.css (v12).
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var PRINT = { pageGo: 350, pagePrintEnd: 2150, cardGo: 4050, cardPrintEnd: 5850, bye: 7800 };
+  var PRINT = { pageGo: 350, pagePrintEnd: 2150, cardGo: 4050, cardPrintEnd: 5850, bye: 7800, settle: 9000 };
   var pressTimers = [];
 
   // The printed page shows only the opening of the reflection; Copy copies it all.
@@ -198,31 +198,37 @@
   function runPress() {
     var section = $("export");
     section.classList.remove("go");
+    section.classList.remove("done");
     pressTimers.forEach(clearTimeout); pressTimers = [];
+    var printer = $("printer"), cap = $("pcap");
+    printer.classList.remove("printing");
+    printer.style.display = "";
+    cap.textContent = "";
     if (reducedMotion) return;
     // Measure after layout: each output starts centred on the printer slot,
     // scaled down, its bottom edge just inside the slot, then rises by --rise.
+    // The printer must be visible again before measuring: a hidden slot
+    // measures as 0,0 and the outputs fly in from the corner of the screen.
     requestAnimationFrame(function () {
       var slot = $("pslot").getBoundingClientRect();
       var sx = slot.left + slot.width / 2, sy = slot.top + slot.height / 2;
       ["out-card", "out-page"].forEach(function (id) {
         var el = $(id), r = el.getBoundingClientRect();
         var h = r.height * 0.22;
-        el.style.setProperty("--sx", Math.round(sx - (r.left + r.width / 2)) + "px");
-        el.style.setProperty("--sy", Math.round(sy + h / 2 - (r.top + r.height / 2)) + "px");
+        el.style.setProperty("--sx", (slot.width ? Math.round(sx - (r.left + r.width / 2)) : 0) + "px");
+        el.style.setProperty("--sy", (slot.width ? Math.round(sy + h / 2 - (r.top + r.height / 2)) : 0) + "px");
         el.style.setProperty("--rise", Math.round(h) + "px");
       });
       section.classList.add("go");
-      var printer = $("printer"), cap = $("pcap");
-      printer.classList.remove("printing");
-      printer.style.display = "";
       function later(ms, fn) { pressTimers.push(setTimeout(fn, ms)); }
-      cap.textContent = "";
       later(PRINT.pageGo, function () { printer.classList.add("printing"); cap.textContent = "printing your page\u2026"; });
       later(PRINT.pagePrintEnd, function () { printer.classList.remove("printing"); cap.textContent = ""; });
       later(PRINT.cardGo, function () { printer.classList.add("printing"); cap.textContent = "printing your card\u2026"; });
       later(PRINT.cardPrintEnd, function () { printer.classList.remove("printing"); cap.textContent = ""; });
       later(PRINT.bye, function () { printer.style.display = "none"; });
+      // Clear the animation once settled so the final page and card
+      // re-rasterise at full sharpness instead of keeping a scaled layer.
+      later(PRINT.settle, function () { section.classList.remove("go"); section.classList.add("done"); });
     });
   }
 
@@ -250,7 +256,7 @@
 
   $("copy").addEventListener("click", function () {
     var txt = C.formatShareText(currentText(), current.video.tags, CFG.brandHandle);
-    function done(ok) { $("toast").textContent = ok ? "Copied. Paste it into your LinkedIn post." : "Couldn't copy. Select the text on the page and copy it."; }
+    function done(ok) { $("toast").textContent = ok ? "" : "Couldn't copy. Select the text on the page and copy it."; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { done(true); }, function () { fallback(); });
     else fallback();
     function fallback() {
