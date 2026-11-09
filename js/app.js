@@ -180,26 +180,77 @@
     ctx.fillText(shortDate, W - 60, H - 40); ctx.textAlign = "left";
   }
 
+  // The press: printer feeds the card up out of its slot, then the page.
+  // Timings mirror the CSS animation delays/durations in style.css (v12).
+  var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var PRINT = { pageGo: 350, pagePrintEnd: 2150, cardGo: 4050, cardPrintEnd: 5850, bye: 7800 };
+  var pressTimers = [];
+
+  // The printed page shows only the opening of the reflection; Copy copies it all.
+  function previewText(t) {
+    var lim = 260;
+    if (t.length <= lim) return t;
+    var cut = t.slice(0, lim), sp = cut.lastIndexOf(" ");
+    if (sp > 120) cut = cut.slice(0, sp);
+    return cut.replace(/\s+$/, "") + " \u2026";
+  }
+
+  function runPress() {
+    var section = $("export");
+    section.classList.remove("go");
+    pressTimers.forEach(clearTimeout); pressTimers = [];
+    if (reducedMotion) return;
+    // Measure after layout: each output starts centred on the printer slot,
+    // scaled down, its bottom edge just inside the slot, then rises by --rise.
+    requestAnimationFrame(function () {
+      var slot = $("pslot").getBoundingClientRect();
+      var sx = slot.left + slot.width / 2, sy = slot.top + slot.height / 2;
+      ["out-card", "out-page"].forEach(function (id) {
+        var el = $(id), r = el.getBoundingClientRect();
+        var h = r.height * 0.22;
+        el.style.setProperty("--sx", Math.round(sx - (r.left + r.width / 2)) + "px");
+        el.style.setProperty("--sy", Math.round(sy + h / 2 - (r.top + r.height / 2)) + "px");
+        el.style.setProperty("--rise", Math.round(h) + "px");
+      });
+      section.classList.add("go");
+      var printer = $("printer"), cap = $("pcap");
+      printer.classList.remove("printing");
+      printer.style.display = "";
+      function later(ms, fn) { pressTimers.push(setTimeout(fn, ms)); }
+      cap.textContent = "";
+      later(PRINT.pageGo, function () { printer.classList.add("printing"); cap.textContent = "printing your page\u2026"; });
+      later(PRINT.pagePrintEnd, function () { printer.classList.remove("printing"); cap.textContent = ""; });
+      later(PRINT.cardGo, function () { printer.classList.add("printing"); cap.textContent = "printing your card\u2026"; });
+      later(PRINT.cardPrintEnd, function () { printer.classList.remove("printing"); cap.textContent = ""; });
+      later(PRINT.bye, function () { printer.style.display = "none"; });
+    });
+  }
+
   function openExport(genreId) {
     openEditor(genreId);               // loads current + draft
     var text = currentText();
-    var box = $("copybox");
+    var st = $("sheet-text");
     if (!C.wordCount(text)) {
-      box.textContent = "Write your reflection first, then come back to export.";
-      box.classList.add("empty"); $("copy").disabled = true;
+      st.textContent = "Write your reflection first, then come back to export.";
+      st.classList.add("empty");
+      $("copy").disabled = true;
     } else {
-      box.textContent = C.formatShareText(text, current.video.tags, CFG.brandHandle);
-      box.classList.remove("empty"); $("copy").disabled = false;
+      st.textContent = previewText(text.replace(/\s+$/, ""));
+      st.classList.remove("empty");
+      $("copy").disabled = false;
     }
+    $("sheet-tags").textContent = (current.video.tags || []).map(C.cleanTag).filter(Boolean).slice(0, 5).join(" ");
+    $("sheet-handle").textContent = CFG.brandHandle;
     $("back-writing").href = "#/g/" + current.genre.id;
     $("toast").textContent = "";
     drawCard();
     show("export");
+    runPress();
   }
 
   $("copy").addEventListener("click", function () {
-    var txt = $("copybox").textContent;
-    function done(ok) { $("toast").textContent = ok ? "Copied. Paste it into your LinkedIn post." : "Couldn't copy. Select the text above and copy it."; }
+    var txt = C.formatShareText(currentText(), current.video.tags, CFG.brandHandle);
+    function done(ok) { $("toast").textContent = ok ? "Copied. Paste it into your LinkedIn post." : "Couldn't copy. Select the text on the page and copy it."; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { done(true); }, function () { fallback(); });
     else fallback();
     function fallback() {
