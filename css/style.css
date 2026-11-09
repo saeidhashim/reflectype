@@ -164,7 +164,12 @@ body[data-view=editor] .nbdate{display:none}
 /* v12: printer export - a little press prints your card, then your page */
 .stage{position:relative;margin-top:4px;display:flex;flex-direction:column}
 .outputs{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start;max-width:1040px;margin:0 auto;width:100%}
-.out{margin:0;display:flex;flex-direction:column;gap:16px;opacity:0;will-change:transform,clip-path;clip-path:inset(0 0 0 0)}
+.out{margin:0;display:flex;flex-direction:column;gap:16px;opacity:0;clip-path:inset(0 0 0 0)}
+.go .out{will-change:transform,clip-path}
+.done .out{opacity:1;transform:none;clip-path:none;animation:none;will-change:auto}
+.done .obtn{opacity:1;transform:none;animation:none}
+.done .xhint{opacity:1;animation:none}
+.done .printer{display:none}
 .out .card{box-shadow:0 14px 34px rgba(29,27,24,.16);transform:rotate(-.5deg)}
 .out .sheet{box-shadow:0 14px 34px rgba(29,27,24,.14);transform:rotate(.4deg)}
 .obtn{align-self:center;opacity:0;transform:translateY(10px)}
@@ -192,7 +197,7 @@ body[data-view=editor] .nbdate{display:none}
 }
 .printer{margin:4px auto 0;text-align:center;pointer-events:none}
 .printer-inner{display:inline-block;transform-origin:50% 90%}
-.printer.printing .printer-inner{animation:wig .34s linear infinite}
+.printer.printing .printer-inner{animation:wig .34s steps(1) infinite}
 @keyframes wig{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(.6px,-.5px) rotate(.35deg)}50%{transform:translate(-.5px,.3px) rotate(-.3deg)}75%{transform:translate(.4px,.5px) rotate(.2deg)}}
 .printer.printing #pled{fill:#1d1b18;animation:led .9s ease-in-out infinite}
 @keyframes led{0%,100%{opacity:1}50%{opacity:.2}}
@@ -218,4 +223,4 @@ body[data-view=export] .wrap{padding-bottom:20px}
   .obtn{opacity:1;transform:none}
   .xhint{opacity:1}
   .printer{display:none}
-           }
+}
