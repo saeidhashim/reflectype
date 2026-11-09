@@ -64,7 +64,7 @@
         updateControls();
         $("video-status").textContent = "Video couldn't load. Reload to try again.";
       });
-      var primary = document.createElement("source"); primary.src = v.src; primary.type = "video/webm"; el.appendChild(primary);
+      var primary = document.createElement("source"); primary.src = v.src; primary.type = /\.mp4(\?|#|$)/i.test(v.src) ? "video/mp4" : "video/webm"; el.appendChild(primary);
       if (v.fallbackSrc) { var fallback = document.createElement("source"); fallback.src = v.fallbackSrc; fallback.type = "video/mp4"; el.appendChild(fallback); }
       box.appendChild(el);
       if (v.credit) {
