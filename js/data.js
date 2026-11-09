@@ -58,9 +58,6 @@ window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "psycholog
 window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "history"; })[0].videos = [
   { title: "German Reunification Explained", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/8/89/German_Reunification_explained_by_simpleshow_foundation_EN.webm/German_Reunification_explained_by_simpleshow_foundation_EN.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:German_Reunification_explained_by_simpleshow_foundation_EN.webm", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", credit: "Simpleshow foundation \u00b7 Narration only, no music \u00b7 CC BY-SA 3.0." }
 ];
-window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "sports"; })[0].videos = [
-  { title: "The Offside Rule, Explained in Two Minutes", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/9/96/Offside_Rule_%E2%80%93_explained_in_two_minutes.webm/Offside_Rule_%E2%80%93_explained_in_two_minutes.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:Offside_Rule_%E2%80%93_explained_in_two_minutes.webm", licenseUrl: "https://creativecommons.org/licenses/by/3.0/", credit: "Simpleshow foundation \u00b7 Narration only, no music \u00b7 CC BY 3.0." }
-];
 window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "health"; })[0].videos = [
   { title: "Sleep Hygiene: How to Sleep Better", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/9/9b/Simpleshow_%28EN%29_Foundation_Sleep_Hygiene_160308_1920x1080.webm/Simpleshow_%28EN%29_Foundation_Sleep_Hygiene_160308_1920x1080.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:Simpleshow_%28EN%29_Foundation_Sleep_Hygiene_160308_1920x1080.webm", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", credit: "Simpleshow foundation \u00b7 Narration only, no music \u00b7 CC BY-SA 3.0." }
 ];
@@ -69,9 +66,6 @@ window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "design"; 
 ];
 window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "nature"; })[0].videos = [
   { title: "How Climate Change Affects Biodiversity", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/47/How_Climate_Change_Affects_Biodiversity_%281%29.webm/How_Climate_Change_Affects_Biodiversity_%281%29.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:How_Climate_Change_Affects_Biodiversity_%281%29.webm", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", credit: "Simpleshow foundation \u00b7 Narration only, no music \u00b7 CC BY-SA 3.0." }
-];
-window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "society"; })[0].videos = [
-  { title: "The Political Spectrum", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/7/71/Simpleshow_foundation_The_Political_Spectrum.webm/Simpleshow_foundation_The_Political_Spectrum.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:Simpleshow_foundation_The_Political_Spectrum.webm", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", credit: "Simpleshow foundation \u00b7 Narration only, no music \u00b7 CC BY-SA 4.0." }
 ];
 window.REFLECTYPE_CONFIG.genres.filter(function (g) { return g.id === "food"; })[0].videos = [
   { title: "Food Waste Explained", src: "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a2/Food_Waste_-_explained_by_simpleshow_foundation.webm/Food_Waste_-_explained_by_simpleshow_foundation.webm.480p.vp9.webm", source: "https://commons.wikimedia.org/wiki/File:Food_Waste_-_explained_by_simpleshow_foundation.webm", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", credit: "Simpleshow foundation \u00b7 Narration only, no music \u00b7 CC BY-SA 3.0." }
