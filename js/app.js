@@ -101,6 +101,17 @@
   });
   window.addEventListener("pagehide", saveNow);
 
+  /* ---------- streak ---------- */
+  function updateStreak() {
+    var n = store(function (s) { return C.streak(s); }) || 0;
+    $("streak-n").textContent = n;
+    $("streak").setAttribute("title", n === 1 ? "1 day in a row" : n + " days in a row");
+  }
+  function markExport() {
+    store(function (s) { s.setItem(C.exportKey(today), "1"); });
+    updateStreak();
+  }
+
   /* ---------- export ---------- */
   function currentText() { return store(function (s) { return s.getItem(C.draftKey(today, current.genre.id)); }) || ""; }
 
@@ -158,7 +169,7 @@
 
   $("copy").addEventListener("click", function () {
     var txt = $("copybox").textContent;
-    function done(ok) { $("toast").textContent = ok ? "Copied. Paste it into your LinkedIn post." : "Couldn't copy. Select the text above and copy it."; }
+    function done(ok) { if (ok) markExport(); $("toast").textContent = ok ? "Copied. Paste it into your LinkedIn post." : "Couldn't copy. Select the text above and copy it."; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { done(true); }, function () { fallback(); });
     else fallback();
     function fallback() {
@@ -175,6 +186,7 @@
       a.href = URL.createObjectURL(b);
       a.download = "reflectype-" + current.genre.id + "-" + today + ".png";
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      markExport();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
     }, "image/png");
   });
@@ -187,5 +199,6 @@
     if (m[2]) openExport(m[1]); else openEditor(m[1]);
   }
   window.addEventListener("hashchange", route);
+  updateStreak();
   route();
 })();
